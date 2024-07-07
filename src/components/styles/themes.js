@@ -9,7 +9,7 @@ export const lightTheme = createTheme({
         MuiCard: {
             styleOverrides: {
                 root: {
-                    border: '1px solid #007FFF', // גבול שחור במצב בהיר
+                    border: '1px solid #007FFF', 
                 },
             },
         },
@@ -24,7 +24,7 @@ export const darkTheme = createTheme({
         MuiCard: {
             styleOverrides: {
                 root: {
-                    border: '1px solid #fff', // גבול לבן במצב כהה
+                    border: '1px solid #fff', 
                 },
             },
         },

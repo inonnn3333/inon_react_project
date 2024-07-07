@@ -10,7 +10,6 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import { ThemeProvider } from '@mui/material/styles';
 import { Paper } from "@mui/material";
-// import ProtectedRoute from "./components/ProtectedRoute";
 import About from "./components/About";
 import DarkModeContext, { DarkModeProvider } from './components/DarkModeContext';
 import { lightTheme, darkTheme } from "./components/styles/themes";

@@ -9,9 +9,7 @@ import { useAuth } from './AuthContext';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import PersonIcon from '@mui/icons-material/Person';
 
-const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-    // עיצוב ה-Switch נשאר אותו הדבר
-}));
+const MaterialUISwitch = styled(Switch)(({ theme }) => ({}));
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -42,7 +40,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -218,7 +215,6 @@ const Header = ({ onSearch }) => {
                     />
                     <Search>
                         <SearchIconWrapper>
-                            {/* <SearchIcon /> */}
                         </SearchIconWrapper>
                         <StyledInputBase
                             placeholder="חיפוש..."

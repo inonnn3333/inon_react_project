@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CssBaseline, Box, Container, Typography, TextField, Button, Paper } from '@mui/material';
 import axios from 'axios';
 import DarkModeContext from './DarkModeContext';
-import { useAuth } from './AuthContext'; // ייבוא useAuth
+import { useAuth } from './AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -12,7 +12,7 @@ const Login = () => {
     const [showSnackbar, setShowSnackbar] = useState(false);
     const navigate = useNavigate();
     const { darkMode } = useContext(DarkModeContext);
-    const { login } = useAuth(); // שימוש ב-useAuth
+    const { login } = useAuth();
 
     const handleSubmit = (e) => {
         e.preventDefault();

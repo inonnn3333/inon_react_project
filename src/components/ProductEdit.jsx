@@ -95,6 +95,7 @@ const ProductEdit = () => {
                     },
                 }
             );
+            console.log(response.data);
             setStatus(true);
             
             setTimeout(() => {

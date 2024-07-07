@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Tooltip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import Snackbar from './SnackBar';
 
 
 const DeleteCard = ({ cardId, onDelete }) => {
     const [open, setOpen] = useState(false);
     const [status, setStatus] = useState(false);
-    const navigate = useNavigate();
-
     const handleClickOpen = () => {
         setOpen(true);
     };

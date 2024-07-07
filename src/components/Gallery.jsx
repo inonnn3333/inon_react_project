@@ -15,7 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const Gallery = ({ searchQuery }) => {
     const navigate = useNavigate();
-    const { isAuthenticated, user } = useAuth();
+    const { isAuthenticated } = useAuth();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -27,7 +27,6 @@ const Gallery = ({ searchQuery }) => {
                 const response = await axios.get('https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards');
                 const cards = response.data;
 
-                // Check if user has liked each card
                 if (userId) {
                     cards.forEach((card) => {
                         card.liked = card.likes.includes(userId);
@@ -61,7 +60,6 @@ const Gallery = ({ searchQuery }) => {
             );
             const updatedProduct = response.data;
 
-            // Check if user has liked the updated product
             updatedProduct.liked = updatedProduct.likes.includes(userId);
 
             setData((prevData) =>
@@ -85,10 +83,10 @@ const Gallery = ({ searchQuery }) => {
             {!isAuthenticated && (
                 <>
                     <Typography variant="h4" component="h1" gutterBottom>
-                        ברוך הבא
+                        ברוכים הבאים ל-BCard
                     </Typography>
                     <Typography variant="body1" component="p" gutterBottom>
-                        lorem ipsum
+                        הפלטפורמה המובילה לניהול ושיתוף כרטיסי ביקור באינטרנט. הפלטפורמה שלנו מספקת פתרון מקיף ליצירה, עריכה וארגון כרטיסי הביקור שלך בקלות, כך שתמיד תשאיר רושם נהדר.
                     </Typography>
                 </>
             )}

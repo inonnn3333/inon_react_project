@@ -1,17 +1,16 @@
-// src/Footer.js
 import React, { useContext } from 'react';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Grid, Container, Tooltip } from '@mui/material';
+import { Box, Grid, Tooltip } from '@mui/material';
 import DarkModeContext from './DarkModeContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext'; // ייבוא useAuth
+import { useAuth } from './AuthContext'; 
 
 const Footer = () => {
     const { darkMode } = useContext(DarkModeContext);
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuth(); // שימוש ב-useAuth
+    const { isAuthenticated } = useAuth();
 
     const iconStyle = {
         cursor: 'pointer',
@@ -33,11 +32,11 @@ const Footer = () => {
                 position: 'fixed',
                 bottom: 0,
                 width: '100%',
-                height: '50px', // הגדרת גובה נמוך יותר
+                height: '50px', 
                 backgroundColor: darkMode ? '#333' : '#f8f8f8',
                 boxShadow: darkMode ? '0 -2px 5px rgba(255,255,255,0.1)' : '0 -2px 5px rgba(0,0,0,0.1)',
                 color: darkMode ? 'white' : 'black',
-                zIndex: 1000, // הגדרת z-index של footer
+                zIndex: 1000,
             }}
         >
                 <Grid container justifyContent="center" alignItems="center" spacing={2} sx={ {m: 0}}>
@@ -51,7 +50,7 @@ const Footer = () => {
                             <AccountBoxOutlinedIcon sx={iconStyle} />
                         </Tooltip>
                     </Grid>
-                    {isAuthenticated && ( // הצגת האייקון רק אם המשתמש מחובר
+                    {isAuthenticated && (
                         <Grid item onClick={() => {navigate('/product/new')}} sx={ {m: 0}}>
                             <Tooltip title="כרטיס ביקור חדש">
                                 <AddIcon sx={iconStyle} />
@@ -59,8 +58,6 @@ const Footer = () => {
                         </Grid>
                     )}
                 </Grid>
-            {/* <Container width= '50%' justifyContent="center" alignItems="center" sx={ {m: 0} }>
-            </Container> */}
         </Box>
     );
 }

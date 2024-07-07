@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useState, useEffect, useContext,} from 'react';
 import getUsers from './GetUsers';
 
@@ -16,7 +15,7 @@ const AuthProvider = ({ children }) => {
     const login = async (token) => {
         localStorage.setItem('token', token);
         const getUsetDetailes = await getUsers(token);
-        setTheUser(JSON.stringify(getUsetDetailes)); //! לוקח את פרטי היוזר
+        setTheUser(JSON.stringify(getUsetDetailes)); 
         setIsAuthenticated(true);
     };
 

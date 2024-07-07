@@ -1,5 +1,4 @@
 import React, { useContext, useState, createContext} from 'react';
-// import { useToken } from './TokenProvider';
 import getUsers from './GetUsers';
 
 const TheUserContext = createContext();
@@ -28,19 +27,3 @@ export const TheUserProvider = ({ children }) => {
 export const useTheUser = () => {
     return useContext(TheUserContext);
 };
-
-    // const { theToken } = useToken();
-
-    // useEffect(() => {
-    //     if (theToken) {
-    //         getUsers(theToken)
-    //             .then((data) => {
-    //                 setTheUser(data);
-    //                 localStorage.setItem('userData', JSON.stringify(theUser));
-    //             })
-    //             .catch((error) => {
-    //                 console.error('Error fetching user in TheUserProvider:', error);
-    //             });
-    //     }
-    // }
-    // , [theToken]);
