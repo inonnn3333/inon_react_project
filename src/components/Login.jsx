@@ -9,7 +9,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const [showSnackbar, setShowSnackbar] = useState(false);
     const navigate = useNavigate();
     const { darkMode } = useContext(DarkModeContext);
     const { login } = useAuth();
@@ -26,14 +25,12 @@ const Login = () => {
                 const token = response.data;
                 login(token);
                 setMessage('התחברות הצליחה!');
-                setShowSnackbar(true);
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);
             }
         } catch (error) {
             setMessage('התחברות נכשלה');
-            setShowSnackbar(true);
         }
     };
 

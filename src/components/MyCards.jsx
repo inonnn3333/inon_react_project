@@ -52,6 +52,13 @@ const MyCards = () => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
             <h1>הכרטיסים שלי</h1>
+            {data === '' && (
+                <Typography variant="body2" align="center">
+                    אין לך עדיין כרטיסיות. צור כרטיסייה בלחיצה<Button color="primary" href="/product/new">כאן</Button>
+                </Typography>
+
+            )}
+            
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', padding: 2 }}>
                 {data.map(product => (
                     <Card key={product._id} sx={{ width: 300, height: 360, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>

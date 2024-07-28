@@ -1,40 +1,46 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, TextField, Button, Typography, Grid, FormControlLabel, Checkbox } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Snackbar from './SnackBar';
-import useFormValidation from '../hooks/useFormValidation';
+import useUserValidation from '../hooks/useUserValidation';
 
 const SignUp = () => {
     const navigate = useNavigate();
 
+
     const initialFormState = {
-        firstName: '',
-        middleName: '',
-        lastName: '',
+        name: {
+            first: '',
+            middle: '',
+            last: ''
+        },
         phone: '',
         email: '',
         password: '',
-        imageUrl: '',
-        imageAlt: '',
-        state: '',
-        country: '',
-        city: '',
-        street: '',
-        houseNumber: '',
-        zip: '',
-        isBusiness: false
+        image: {
+            url: '',
+            alt: ''
+        },
+        address: {
+            state: '',
+            country: '',
+            city: '',
+            street: '',
+            houseNumber: '',
+            zip: ''
+        },
+        isBusiness: false,
     };
 
     const placeholderTexts = {
-        firstName: 'שם מלא',
-        middleName: 'שם אמצעי',
-        lastName: 'שם משפחה',
+        first: 'שם פרטי',
+        middle: 'שם אמצעי',
+        last: 'שם משפחה',
         phone: 'פלאפון',
         email: 'כתובת מייל',
         password: 'סיסמא',
-        imageUrl: 'קישור לתמונה',
-        imageAlt: 'טקסט אלטרנטיבי לתמונה',
+        url: 'קישור לתמונה',
+        alt: 'טקסט אלטרנטיבי לתמונה',
         state: 'Enter your state',
         country: 'מדינה',
         city: 'עיר',
@@ -50,10 +56,10 @@ const SignUp = () => {
         handleChange,
         handleReset,
         validateForm,
-    } = useFormValidation(initialFormState);
+    } = useUserValidation(initialFormState);
 
     const [status, setStatus] = useState(false);
-    const [countdown, setCountdown] = useState(3);
+    // const [countdown, setCountdown] = useState(3);
     const [message, setMessage] = useState('');
 
     const handleSubmit = async (event) => {
@@ -61,37 +67,37 @@ const SignUp = () => {
         if (validateForm()) {
             const user = {
                 name: {
-                    first: formValues.firstName,
-                    last: formValues.lastName,
-                    middle: formValues.middleName,
+                    first: formValues.name.first,
+                    last: formValues.name.last,
+                    middle: formValues.name.middle,
                 },
                 phone: formValues.phone,
                 email: formValues.email,
                 password: formValues.password,
                 image: {
-                    url: formValues.imageUrl,
-                    alt: formValues.imageAlt,
+                    url: formValues.image.url,
+                    alt: formValues.image.alt,
                 },
                 address: {
-                    state: formValues.state,
-                    country: formValues.country,
-                    city: formValues.city,
-                    street: formValues.street,
-                    houseNumber: formValues.houseNumber,
-                    zip: formValues.zip,
+                    state: formValues.address.state,
+                    country: formValues.address.country,
+                    city: formValues.address.city,
+                    street: formValues.address.street,
+                    houseNumber: formValues.address.houseNumber,
+                    zip: formValues.address.zip,
                 },
                 isBusiness: formValues.isBusiness
             };
 
             try {
                 const response = await axios.post('https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users', user);
-                if (response.status === 200) {
+                if (response.status === 201) {
                     localStorage.setItem('userToken', response.data.token);
                     setStatus(true);
-                    setCountdown(3);
-                    setMessage('ההרשמה הצליחה!');
+                    // setCountdown(3);
+                    setMessage('ההרשמה הצליחה, יש להתחבר על מנת להמשיך!');
                     setTimeout(() => {
-                        navigate('/');
+                        navigate('/login');
                     }, 3000);
                 }
             } catch (error) {
@@ -102,18 +108,18 @@ const SignUp = () => {
         }
     };
 
-    useEffect(() => {
-        if (status === true) {
-            if (countdown > 0) {
-                const timer = setTimeout(() => {
-                    setCountdown(countdown - 1);
-                }, 1000);
-                return () => clearTimeout(timer);
-            } else {
-                setStatus(false);
-            }
-        }
-    }, [status, countdown]);
+    // useEffect(() => {
+    //     if (status === true) {
+    //         if (countdown > 0) {
+    //             const timer = setTimeout(() => {
+    //                 setCountdown(countdown - 1);
+    //             }, 1000);
+    //             return () => clearTimeout(timer);
+    //         } else {
+    //             setStatus(false);
+    //         }
+    //     }
+    // }, [status, countdown]);
 
     const handleCheckboxChange = (event) => {
         handleChange({
@@ -141,23 +147,165 @@ const SignUp = () => {
             <Typography variant="h4" gutterBottom>
                 הרשמה
             </Typography>
+
             <Grid container spacing={2} justifyContent="center">
-                {Object.keys(initialFormState).map((field) => (
-                    field !== 'isBusiness' && (
-                    <Grid item xs={12} sm={5} key={field}>
-                        <TextField
-                            name={field}
-                            label={placeholderTexts[field]}
-                            value={formValues[field]}
-                            onChange={handleChange}
-                            type={field === 'email' ? 'email' : 'text'}
-                            fullWidth
-                            error={!!errors[field]}
-                            helperText={errors[field]}
-                        />
-                    </Grid>
-                )))}
-                <Grid item xs={10} >
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="name.first"
+                        label={placeholderTexts.first}
+                        value={formValues.name.first}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['name.first']}
+                        helperText={errors['name.first']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="name.middle"
+                        label={placeholderTexts.middle}
+                        value={formValues.name.middle}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['name.middle']}
+                        helperText={errors['name.middle']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="name.last"
+                        label={placeholderTexts.last}
+                        value={formValues.name.last}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['name.last']}
+                        helperText={errors['name.last']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="phone"
+                        label={placeholderTexts.phone}
+                        value={formValues.phone}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors.phone}
+                        helperText={errors.phone}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="email"
+                        label={placeholderTexts.email}
+                        value={formValues.email}
+                        onChange={handleChange}
+                        type="email"
+                        fullWidth
+                        error={!!errors.email}
+                        helperText={errors.email}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="password"
+                        label={placeholderTexts.password}
+                        value={formValues.password}
+                        onChange={handleChange}
+                        type="password"
+                        fullWidth
+                        error={!!errors.password}
+                        helperText={errors.password}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="image.url"
+                        label={placeholderTexts.url}
+                        value={formValues.image.url}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['image.url']}
+                        helperText={errors['image.url']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="image.alt"
+                        label={placeholderTexts.alt}
+                        value={formValues.image.alt}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['image.alt']}
+                        helperText={errors['image.alt']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.state"
+                        label={placeholderTexts.state}
+                        value={formValues.address.state}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.state']}
+                        helperText={errors['address.state']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.country"
+                        label={placeholderTexts.country}
+                        value={formValues.address.country}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.country']}
+                        helperText={errors['address.country']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.city"
+                        label={placeholderTexts.city}
+                        value={formValues.address.city}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.city']}
+                        helperText={errors['address.city']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.street"
+                        label={placeholderTexts.street}
+                        value={formValues.address.street}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.street']}
+                        helperText={errors['address.street']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.houseNumber"
+                        label={placeholderTexts.houseNumber}
+                        value={formValues.address.houseNumber}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.houseNumber']}
+                        helperText={errors['address.houseNumber']}
+                    />
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <TextField
+                        name="address.zip"
+                        label={placeholderTexts.zip}
+                        value={formValues.address.zip}
+                        onChange={handleChange}
+                        fullWidth
+                        error={!!errors['address.zip']}
+                        helperText={errors['address.zip']}
+                    />
+                </Grid>
+                <Grid item xs={10}>
                     <FormControlLabel
                         control={
                             <Checkbox
@@ -171,12 +319,9 @@ const SignUp = () => {
                     />
                 </Grid>
             </Grid>
+
             <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center', width: '50%', marginBottom: '7em' }}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                >
+                <Button variant="contained" color="primary" type="submit">
                     הירשם
                 </Button>
                 <Button
@@ -188,12 +333,7 @@ const SignUp = () => {
                     נקה הכל
                 </Button>
             </Box>
-            <Snackbar 
-                message={<p>
-                    {message}
-                </p>}
-                showSnackbar={status === true || message !== ''}
-            />
+            {status && <Typography sx={{ mt: 2, color: message === 'הרישום בוצע בהצלחה, מיד תעבור לדף הבית!' ? 'green' : 'red' }}>{message}</Typography>}
         </Box>
     );
 };

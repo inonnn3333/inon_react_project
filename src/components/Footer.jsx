@@ -24,7 +24,7 @@ const Footer = () => {
 
     return (
         <Box
-            container
+            container="true"
             justifyContent="center" alignItems="center"
             component="footer"
             sx={{

@@ -121,31 +121,34 @@ const Header = ({ onSearch }) => {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            <MenuItem onClick={() => handleNavigate('/')}>
-                                <Typography textAlign="center">BCard</Typography>
-                            </MenuItem>
-                            <MenuItem onClick={() => handleNavigate('/about')}>
-                                <Typography textAlign="center">אודות</Typography>
-                            </MenuItem>
-                            {isAuthenticated ? (
-                                <>
-                                    <MenuItem onClick={() => handleNavigate('/my-cards')}>
+                            {[
+                                <MenuItem onClick={() => handleNavigate('/')} key="home">
+                                    <Typography textAlign="center">BCard</Typography>
+                                </MenuItem>,
+                                <MenuItem onClick={() => handleNavigate('/about')} key="about">
+                                    <Typography textAlign="center">אודות</Typography>
+                                </MenuItem>,
+                                isAuthenticated && (
+                                    <MenuItem onClick={() => handleNavigate('/my-cards')} key="my-cards">
                                         <Typography textAlign="center">הכרטיסיות שלי</Typography>
                                     </MenuItem>
-                                    <MenuItem onClick={() => handleNavigate('/fav-cards')}>
+                                ),
+                                isAuthenticated && (
+                                    <MenuItem onClick={() => handleNavigate('/fav-cards')} key="fav-cards">
                                         <Typography textAlign="center">הכרטיסיות שאהבתי</Typography>
                                     </MenuItem>
-                                </>
-                            ) : (
-                                <>
-                                    <MenuItem onClick={() => handleNavigate('/sign-up')}>
+                                ),
+                                !isAuthenticated && (
+                                    <MenuItem onClick={() => handleNavigate('/sign-up')} key="sign-up">
                                         <Typography textAlign="center">הרשמה</Typography>
                                     </MenuItem>
-                                    <MenuItem onClick={() => handleNavigate('/login')}>
+                                ),
+                                !isAuthenticated && (
+                                    <MenuItem onClick={() => handleNavigate('/login')} key="login">
                                         <Typography textAlign="center">התחברות</Typography>
                                     </MenuItem>
-                                </>
-                            )}
+                                )
+                            ]}
                         </Menu>
                     </Box>
                     <Typography
